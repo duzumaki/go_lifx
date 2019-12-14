@@ -12,6 +12,7 @@ func main() {
 	//fmt.Println(bulbs)
 	//Get label
 	labelofBulbs(bulbs)
+	checkBulbPower(bulbs)
 
 	//Get power state
 	//powerState, _ := bulbs[0].GetPowerState()
@@ -48,5 +49,12 @@ func labelofBulbs(bulbs []*golifx.Bulb) {
 	for _, bulb := range bulbs {
 		location, _ := bulb.GetLabel()
 		fmt.Printf("Label: %s\n", location)
+	}
+}
+
+func checkBulbPower(bulbs []*golifx.Bulb) {
+	for _, bulb := range bulbs {
+		powerState, _ := bulb.GetPowerState()
+		fmt.Printf("Power Status: %v\n", powerState)
 	}
 }
