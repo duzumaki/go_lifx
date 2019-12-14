@@ -9,6 +9,7 @@ import (
 func main() {
 	//Lookup all bulbs
 	bulbs, _ := golifx.LookupBulbs()
+	nameOfBulbAndPowerStatus(bulbs)
 
 	//Turn if off
 	// if !powerState {
