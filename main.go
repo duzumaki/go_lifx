@@ -3,8 +3,11 @@ package main
 import (
 	"fmt"
 	"log"
+	"os"
 
 	"github.com/2tvenom/golifx"
+	"github.com/dghubble/go-twitter/twitter"
+	"github.com/dghubble/oauth1"
 )
 
 // NameAndPower ...
@@ -21,12 +24,47 @@ func main() {
 	}
 	nameOfBulbAndPowerStatus(bulbs, &NameAndPower{})
 
-	// config := oauth1.NewConfig("consumerKey", "consumerSecret")
-	// token := oauth1.NewToken("accessToken", "accessSecret")
-	// httpClient := config.Client(oauth1.NoContext, token)
+	consumerKEY := os.Getenv("CONSUMER_KEY")
+	consumerSecret := os.Getenv("CONSUMER_SECRET")
+	accessToken := os.Getenv("ACCESS_TOKEN")
+	accessSecret := os.Getenv("ACCESS_SECRET")
+
+	config := oauth1.NewConfig(consumerKEY, consumerSecret)
+	token := oauth1.NewToken(accessToken, accessSecret)
+	httpClient := config.Client(oauth1.NoContext, token)
 
 	// // Twitter client
-	// client := twitter.NewClient(httpClient)
+	client := twitter.NewClient(httpClient)
+	//run get command to get json and check the latest tweet that mentions a color and change it to that color.
+	// User Show
+	t := true
+	f := false
+	tweets, _, err := client.Timelines.MentionTimeline(&twitter.MentionTimelineParams{Count: 1, IncludeEntities: &f, TrimUser: &t})
+
+	// body, err := ioutil.ReadAll(.Body)
+	fmt.Println(tweets[0].Text)
+
+	// if err != nil {
+	// 	log.Print(err)
+	// }
+
+	// log.Printf("%+v\n", resp)
+	// log.Printf("%+v\n", search)
+
+	// url := "https://api.twitter.com/1.1/search/tweets.json?q=from%3Auzumakithegod"
+	// resp, err := http.Get(url)
+	// if err != nil {
+	// 	log.Fatal(err)
+	// }
+
+	// defer resp.Body.Close()
+
+	// body, err := ioutil.ReadAll(resp.Body)
+	// if err != nil {
+	// 	log.Fatal(err)
+	// }
+
+	// fmt.Println(string(body))
 
 }
 
