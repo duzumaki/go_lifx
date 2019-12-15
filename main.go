@@ -24,12 +24,12 @@ func main() {
 	}
 	nameOfBulbAndPowerStatus(bulbs, &NameAndPower{})
 
-	consumerKEY := os.Getenv("CONSUMER_KEY")
+	consumerKey := os.Getenv("CONSUMER_KEY")
 	consumerSecret := os.Getenv("CONSUMER_SECRET")
 	accessToken := os.Getenv("ACCESS_TOKEN")
 	accessSecret := os.Getenv("ACCESS_SECRET")
 
-	config := oauth1.NewConfig(consumerKEY, consumerSecret)
+	config := oauth1.NewConfig(consumerKey, consumerSecret)
 	token := oauth1.NewToken(accessToken, accessSecret)
 	httpClient := config.Client(oauth1.NoContext, token)
 
@@ -39,32 +39,24 @@ func main() {
 	// User Show
 	t := true
 	f := false
-	tweets, _, err := client.Timelines.MentionTimeline(&twitter.MentionTimelineParams{Count: 1, IncludeEntities: &f, TrimUser: &t})
+	tweets, _, err := client.Timelines.MentionTimeline(&twitter.MentionTimelineParams{Count: 3, IncludeEntities: &f, TrimUser: &t})
 
 	// body, err := ioutil.ReadAll(.Body)
-	fmt.Println(tweets[0].Text)
+	tweetColor := tweets[1].Text
+	fmt.Println(tweetColor)
 
-	// if err != nil {
-	// 	log.Print(err)
-	// }
+	hsbk := &golifx.HSBK{
+		Hue:        63519,
+		Saturation: 13000,
+		Brightness: 65535,
+		Kelvin:     0,
+	}
 
-	// log.Printf("%+v\n", resp)
-	// log.Printf("%+v\n", search)
-
-	// url := "https://api.twitter.com/1.1/search/tweets.json?q=from%3Auzumakithegod"
-	// resp, err := http.Get(url)
-	// if err != nil {
-	// 	log.Fatal(err)
-	// }
-
-	// defer resp.Body.Close()
-
-	// body, err := ioutil.ReadAll(resp.Body)
-	// if err != nil {
-	// 	log.Fatal(err)
-	// }
-
-	// fmt.Println(string(body))
+	if tweetColor == "@uzumakithegod pink" {
+		for i := 0; i < len(bulbs); i++ {
+			bulbs[i].SetColorState(hsbk, 100)
+		}
+	}
 
 }
 
