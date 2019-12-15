@@ -40,14 +40,14 @@ func main() {
 	t := true
 	f := false
 	tweets, _, err := client.Timelines.MentionTimeline(&twitter.MentionTimelineParams{Count: 3, IncludeEntities: &f, TrimUser: &t})
-
+	//https://lan.developer.lifx.com/docs/building-a-lifx-packet
 	// body, err := ioutil.ReadAll(.Body)
 	tweetColor := tweets[1].Text
 	fmt.Println(tweetColor)
 
 	hsbk := &golifx.HSBK{
 		Hue:        63519,
-		Saturation: 13000,
+		Saturation: 45000,
 		Brightness: 65535,
 		Kelvin:     0,
 	}
